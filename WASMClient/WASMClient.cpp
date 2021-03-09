@@ -243,6 +243,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     EnableMenuItem(hMenu, ID_CONTROL_EXEC_CCODE, MF_BYCOMMAND | MF_ENABLED);
                     SendMessage(hwndEdit, WM_SETTEXT, 0, (LPARAM)"FSUIPC WASM Interface Test Client ready - connected!");
                 }
+                else {
+                    SendMessage(hwndEdit, WM_SETTEXT, 0, (LPARAM)"FSUIPC WASM Interface Test Client ready: failed opening a simconnect connection");
+                }
                 break;
             }
             case ID_FILE_STOP:
