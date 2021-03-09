@@ -47,6 +47,7 @@
 #define ID_CONTROL_SETHVAR              32783
 #define ID_CONTROL_EXECUTECALCULATORCODE 32784
 #define ID_CONTROL_EXEC_CCODE           32785
+#define ID_EDITCHILD					32786
 #define IDC_STATIC                      -1
 
 // Next default values for new objects

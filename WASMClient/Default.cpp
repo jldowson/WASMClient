@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include "SimpleIni.h"
 
-using namespace CPlusPlusLogging;
 
 Default* Default::m_Instance = 0;
 
@@ -27,17 +26,17 @@ Default::Default(const char* baseIniFileName)
 	const char* pv;
 	pv = ini.GetValue("General", "LogLevel");
     if (strcmp(pv, "Debug") == 0)
-        m_logLevel = LOG_LEVEL_DEBUG;
+        m_logLevel = 4;
     else if (strcmp(pv, "Info") == 0)
-        m_logLevel = LOG_LEVEL_INFO;
+        m_logLevel = 2;
     else if (strcmp(pv, "Buffer") == 0)
-        m_logLevel = LOG_LEVEL_BUFFER;
+        m_logLevel = 3;
     else if (strcmp(pv, "Disable") == 0)
-        m_logLevel = DISABLE_LOG;
+        m_logLevel = 1;
     else if (strcmp(pv, "Enable") == 0)
-        m_logLevel = ENABLE_LOG;
+        m_logLevel = 6;
 	else if (strcmp(pv, "Trace") == 0)
-		m_logLevel = LOG_LEVEL_TRACE;
+		m_logLevel = 5;
     else {
         m_logLevel = DEFAULT_LOG_LEVEL;
 	}
@@ -74,6 +73,6 @@ Default* Default::GetInstance(const char* text) throw ()
 }
 
 
-LOG_LEVEL Default::GetLogLevel() { return m_logLevel;}
+int Default::GetLogLevel() { return m_logLevel;}
 int Default::GetStartEventNo() { return m_startEventNo; };
 int Default::GetLvarUpdateFrequency() { return m_lvarUpdateFrequency; };

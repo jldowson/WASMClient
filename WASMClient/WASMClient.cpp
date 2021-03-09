@@ -180,8 +180,27 @@ void MyLogFunction(const char* logString)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    static HWND hwndEdit;
+
     switch (message)
     {
+    case WM_CREATE:
+        hwndEdit = CreateWindowEx(
+            0, "EDIT",   // predefined class 
+            NULL,         // no window title 
+            WS_CHILD | WS_VISIBLE | WS_VSCROLL |
+            ES_LEFT | ES_MULTILINE | ES_AUTOVSCROLL,
+            0, 0, 0, 0,   // set size in WM_SIZE message 
+            hWnd,         // parent window 
+            (HMENU)ID_EDITCHILD,   // edit control ID 
+            (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE),
+            NULL);        // pointer not needed 
+
+// Add text to the window. 
+        SendMessage(hwndEdit, WM_SETTEXT, 0, (LPARAM)"FSUIPC WASM Interface Test Client ready - not connected");
+
+        return 0;
+
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -203,12 +222,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 int startEventNo = defaults->GetStartEventNo();
                 if (!startEventNo) startEventNo = EVENT_START_NO;
                 int lvarUpdateFrequecy = defaults->GetLvarUpdateFrequency(); // 6Hz (default)
-                LogLevel logLevel = defaults->GetLogLevel();
+                int logLevel = defaults->GetLogLevel();
 
                 if (!wasmPtr) wasmPtr = WASMIF::GetInstance(hWnd);
 //              if (!wasmPtr) wasmPtr = WASMIF::GetInstance(hWnd, &MyLogFunction);
 //              if (!wasmPtr) wasmPtr = WASMIF::GetInstance(hWnd, EVENT_START_NO, &MyLogFunction);
-                wasmPtr->setLogLevel(logLevel);
+                wasmPtr->setLogLevel((LOGLEVEL)logLevel);
                 if (lvarUpdateFrequecy)
                     wasmPtr->setLvarUpdateFrequency(lvarUpdateFrequecy);
                 if (wasmPtr->start()) {
@@ -222,6 +241,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     EnableMenuItem(hMenu, ID_CONTROL_SETHVAR, MF_BYCOMMAND | MF_ENABLED);
                     EnableMenuItem(hMenu, ID_CONTROL_LISTHVARS, MF_BYCOMMAND | MF_ENABLED);
                     EnableMenuItem(hMenu, ID_CONTROL_EXEC_CCODE, MF_BYCOMMAND | MF_ENABLED);
+                    SendMessage(hwndEdit, WM_SETTEXT, 0, (LPARAM)"FSUIPC WASM Interface Test Client ready - connected!");
                 }
                 break;
             }
@@ -257,7 +277,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_SETLVAR), hWnd, SetLvar);
                 break;
             case ID_CONTROL_LISTLVARS:
-                if (wasmPtr) wasmPtr->listLvars();
+                if (wasmPtr) {
+                    wasmPtr->logLvars();
+                    map<string, double> result;
+                    wasmPtr->getLvarValues(result);
+                    // Display the result
+                    char textBuffer[16384];
+                    int i = 0;
+                    for (map<string, double>::iterator it = result.begin(); it != result.end(); it++) {
+                        i += sprintf(textBuffer+i, "%s = %f\r\n", it->first.c_str(), it->second);
+                    }
+                    SendMessage(hwndEdit, WM_SETTEXT, 0, (LPARAM)textBuffer);
+                }
                 break;
             case ID_CONTROL_RELOADLVARS:
                 if (wasmPtr) wasmPtr->reload();
@@ -270,7 +301,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_SETHVAR), hWnd, SetHvar);
                 break;
             case ID_CONTROL_LISTHVARS:
-                if (wasmPtr) wasmPtr->listHvars();
+//                if (wasmPtr) wasmPtr->logHvars();
+                if (wasmPtr) {
+                    wasmPtr->logLvars();
+                    unordered_map<int, string> result;
+                    wasmPtr->getHvarList(result);
+                    // Display the result
+                    char textBuffer[16384];
+                    int i = 0;
+                    for (unordered_map<int, string>::iterator it = result.begin(); it != result.end(); it++) {
+                        i += sprintf(textBuffer + i, "%03d: %s\r\n", it->first, it->second.c_str());
+                    }
+                    SendMessage(hwndEdit, WM_SETTEXT, 0, (LPARAM)textBuffer);
+                }
                 break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
@@ -285,6 +328,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             EndPaint(hWnd, &ps);
         }
         break;
+    case WM_SIZE:
+        // Make the edit control the size of the window's client area. 
+
+        MoveWindow(hwndEdit,
+            0, 0,                  // starting x- and y-coordinates 
+            LOWORD(lParam),        // width of client area 
+            HIWORD(lParam),        // height of client area 
+            TRUE);                 // repaint window 
+        return 0;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
@@ -424,8 +476,8 @@ INT_PTR CALLBACK SetLvar(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
                     char valueBuffer[64];
 
                     GetWindowText(hEdit, valueBuffer, 64); valueBuffer[63] = '\0';
-                    sprintf(logBuffer, "Setting lvar value as string: '%s'", valueBuffer);
-                    LOG_DEBUG(logBuffer);
+//                    sprintf(logBuffer, "Setting lvar value as string: '%s'", valueBuffer);
+//                    LOG_DEBUG(logBuffer);
                     wasmPtr->setLvar(selectedId, valueBuffer);
                     break;
                 }
