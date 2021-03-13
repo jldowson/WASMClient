@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstdlib>
 #include "SimpleIni.h"
+#include "SimConnect.h"
 
 
 Default* Default::m_Instance = 0;
@@ -59,6 +60,12 @@ Default::Default(const char* baseIniFileName)
     }
     else m_lvarUpdateFrequency = DEFAULT_LVAR_UPDATE_FREQ;
 
+    pv = ini.GetValue("General", "UseSimConnection");
+    if (pv) {
+        m_simConnectConnection = atoi(pv);
+     }
+    else m_simConnectConnection = SIMCONNECT_OPEN_CONFIGINDEX_LOCAL;
+
 }
 
 Default::~Default() {}
@@ -76,3 +83,4 @@ Default* Default::GetInstance(const char* text) throw ()
 int Default::GetLogLevel() { return m_logLevel;}
 int Default::GetStartEventNo() { return m_startEventNo; };
 int Default::GetLvarUpdateFrequency() { return m_lvarUpdateFrequency; };
+int Default::GetSimConnectConnection() { return m_simConnectConnection; };

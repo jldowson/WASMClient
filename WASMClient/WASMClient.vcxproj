@@ -78,11 +78,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>E:\Repos\WASMClient\lib;C:\MSFS-SDK\SimConnect SDK\lib\static;$(LibraryPath)</LibraryPath>
+    <LibraryPath>.\FSUIPC_WAPI\lib;C:\MSFS-SDK\SimConnect SDK\lib\static;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>E:\Repos\WASMClient\lib;C:\MSFS-SDK\SimConnect SDK\lib\static;$(LibraryPath)</LibraryPath>
+    <LibraryPath>.\FSUIPC_WAPI\lib;C:\MSFS-SDK\SimConnect SDK\lib\static;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\MSFS-SDK\SimConnect SDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MSFS-SDK\SimConnect SDK\include;.\FSUIPC_WAPI\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATENDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\MSFS-SDK\SimConnect SDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MSFS-SDK\SimConnect SDK\include;.\FSUIPC_WAPI\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,15 +145,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CDAIdBank.h" />
-    <ClInclude Include="ClientDataArea.h" />
     <ClInclude Include="Default.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="FSUIPC_WAPI\include\CDAIdBank.h" />
+    <ClInclude Include="FSUIPC_WAPI\include\ClientDataArea.h" />
+    <ClInclude Include="FSUIPC_WAPI\include\WASM.h" />
+    <ClInclude Include="FSUIPC_WAPI\include\WASMIF.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SimpleIni.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="WASMClient.h" />
-    <ClInclude Include="WASMIF.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Default.cpp" />
@@ -168,7 +168,7 @@
     <Image Include="WASMClient.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\lib\FSUIPC_WAPI.lib" />
+    <Library Include="FSUIPC_WAPI\lib\FSUIPC_WAPI.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

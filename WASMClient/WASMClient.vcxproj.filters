@@ -24,22 +24,22 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WASMClient.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SimpleIni.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Default.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WASMIF.h">
+    <ClInclude Include="FSUIPC_WAPI\include\CDAIdBank.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CDAIdBank.h">
+    <ClInclude Include="FSUIPC_WAPI\include\ClientDataArea.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ClientDataArea.h">
+    <ClInclude Include="FSUIPC_WAPI\include\WASM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FSUIPC_WAPI\include\WASMIF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -68,6 +68,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\lib\FSUIPC_WAPI.lib" />
+    <Library Include="FSUIPC_WAPI\lib\FSUIPC_WAPI.lib" />
   </ItemGroup>
 </Project>
