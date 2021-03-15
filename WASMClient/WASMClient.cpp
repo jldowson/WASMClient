@@ -307,18 +307,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_SETHVAR), hWnd, SetHvar);
                 break;
             case ID_CONTROL_LISTHVARS:
-//                if (wasmPtr) wasmPtr->logHvars();
                 if (wasmPtr) {
-                    wasmPtr->logLvars();
+                    wasmPtr->logHvars();
                     unordered_map<int, string> result;
                     wasmPtr->getHvarList(result);
                     // Display the result
-                    char textBuffer[16384];
+                    char* textBuffer = new char[result.size() * (MAX_VAR_NAME_SIZE + 7) + 1];
                     int i = 0;
                     for (unordered_map<int, string>::iterator it = result.begin(); it != result.end(); it++) {
                         i += sprintf(textBuffer + i, "%03d: %s\r\n", it->first, it->second.c_str());
                     }
                     SendMessage(hwndEdit, WM_SETTEXT, 0, (LPARAM)textBuffer);
+                    delete textBuffer;
                 }
                 break;
             default:
