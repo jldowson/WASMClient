@@ -5,6 +5,7 @@
 #include "framework.h"
 #include <Windows.h>
 #include <wchar.h>
+#include <map>
 #include "WASMClient.h"
 #include "WASMIF.h"
 #include "Default.h"
@@ -283,15 +284,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case ID_CONTROL_LISTLVARS:
                 if (wasmPtr) {
                     wasmPtr->logLvars();
-                    map<string, double> result;
+                    map<string, double> result; 
                     wasmPtr->getLvarValues(result);
                     // Display the result
-                    char textBuffer[16384];
+                    char* textBuffer = new char[result.size()*(MAX_VAR_NAME_SIZE + 5 + 32) + 1];
                     int i = 0;
-                    for (map<string, double>::iterator it = result.begin(); it != result.end(); it++) {
+                    for (map<string, double>::iterator it = result.begin(); it != result.end() && i < 16300; it++) {
                         i += sprintf(textBuffer+i, "%s = %f\r\n", it->first.c_str(), it->second);
                     }
                     SendMessage(hwndEdit, WM_SETTEXT, 0, (LPARAM)textBuffer);
+                    delete textBuffer;
                 }
                 break;
             case ID_CONTROL_RELOADLVARS:
