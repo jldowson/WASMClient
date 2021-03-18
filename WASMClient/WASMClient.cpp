@@ -289,7 +289,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     // Display the result
                     char* textBuffer = new char[result.size()*(MAX_VAR_NAME_SIZE + 5 + 32) + 1];
                     int i = 0;
-                    for (map<string, double>::iterator it = result.begin(); it != result.end() && i < 16300; it++) {
+                    for (map<string, double>::iterator it = result.begin(); it != result.end(); it++) {
                         i += sprintf(textBuffer+i, "%s = %f\r\n", it->first.c_str(), it->second);
                     }
                     SendMessage(hwndEdit, WM_SETTEXT, 0, (LPARAM)textBuffer);
