@@ -222,7 +222,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 int startEventNo = defaults->GetStartEventNo();
                 if (!startEventNo) startEventNo = EVENT_START_NO;
-                int lvarUpdateFrequecy = defaults->GetLvarUpdateFrequency(); // 6Hz (default)
+                int lvarUpdateFrequency = defaults->GetLvarUpdateFrequency(); // 6Hz (default)
                 int logLevel = defaults->GetLogLevel();
 
                 if (!wasmPtr) wasmPtr = WASMIF::GetInstance(hWnd);
@@ -230,8 +230,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 //              if (!wasmPtr) wasmPtr = WASMIF::GetInstance(hWnd, EVENT_START_NO, &MyLogFunction);
                 wasmPtr->setLogLevel((LOGLEVEL)logLevel);
                 wasmPtr->setSimConfigConnection(defaults->GetSimConnectConnection());
-                if (lvarUpdateFrequecy)
-                    wasmPtr->setLvarUpdateFrequency(lvarUpdateFrequecy);
+                if (lvarUpdateFrequency)
+                    wasmPtr->setLvarUpdateFrequency(lvarUpdateFrequency);
                 if (wasmPtr->start()) {
                     EnableMenuItem(hMenu, ID_FILE_STOP, MF_BYCOMMAND | MF_ENABLED);
                     EnableMenuItem(hMenu, ID_FILE_START, MF_BYCOMMAND | MF_DISABLED);
