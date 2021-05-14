@@ -20,6 +20,7 @@ enum WASM_EVENT_ID {
 	EVENT_UPDATE_CDAS,		// map to StartEventNo + 3
 	EVENT_LIST_LVARS,		// map to StartEventNo + 4
 	EVENT_RELOAD,			// map to StartEventNo + 5
+	EVENT_SET_LVARS,		// map to StartEventNo + 6
 	EVENT_CONFIG_RECEIVED=9,
 	EVENT_VALUES_RECEIVED=10, // Allow for MAX_NO_VALUE_CDAS (2)
 	EVENT_LVARS_RECEIVED=12, // Allow for MAX_NO_LVAR_CDAS (12)
@@ -42,6 +43,7 @@ class WASMIF
 		static class WASMIF* GetInstance(HWND hWnd, int startEventNo = EVENT_START_NO, void (*loggerFunction)(const char* logString) = nullptr);
 		static class WASMIF* GetInstance(HWND hWnd, void (*loggerFunction)(const char* logString));
 		bool start();
+		bool isRunning();
 		void end();
 		void createAircraftLvarFile();
 		void reload();
@@ -71,6 +73,11 @@ class WASMIF
 		int getHvarIdFromName(const char* hvarName);
 		void getHvarNameFromId(int id, char* name);
 		bool createLvar(const char* lvarName, DWORD value);
+		void registerUpdateCallback(void (*callbackFunction)(void));
+		void registerLvarUpdateCallback(void (*callbackFunction)(int id[], double newValue[]));
+		void registerLvarUpdateCallback(void (*callbackFunction)(const char* lvarName[], double newValue[]));
+		void flagLvarForUpdateCallback(int lvarId);
+		void flagLvarForUpdateCallback(const char* lvarName);
 
 	public:
 		static void CALLBACK MyDispatchProc(SIMCONNECT_RECV* pData, DWORD cbData, void* pContext);
@@ -90,6 +97,7 @@ class WASMIF
 		void SimConnectEnd();
 		const char* getEventString(int eventNo);
 		void setLvar(DWORD param);
+		void setLvarS(DWORD param);
 
 	private:
 		static WASMIF* m_Instance;
@@ -105,9 +113,13 @@ class WASMIF
 		static int nextDefinitionID;
 		vector<string> lvarNames;
 		vector<double> lvarValues;
+		vector<bool> lvarFlaggedForCallback;
 		vector<string> hvarNames;
 		CDAIdBank* cdaIdBank;
 		int simConnection;
 		CRITICAL_SECTION        lvarMutex;
+		void (*cdaCbFunction)(void) = NULL;
+		void (*lvarCbFunctionId)(int id[], double newValue[]) = NULL;
+		void (*lvarCbFunctionName)(const char* lvarName[], double newValue[]) = NULL;
 };
 
