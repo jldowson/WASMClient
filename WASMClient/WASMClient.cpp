@@ -451,11 +451,11 @@ INT_PTR CALLBACK SetLvar(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
         case WM_INITDIALOG: {
             // Populate Combo Box
             if (wasmPtr) {
-                char A[MAX_VAR_NAME_SIZE + 6];
+                char A[MAX_VAR_NAME_SIZE + 8];
                 unordered_map<int, string > lvars;
                 wasmPtr->getLvarList(lvars);
                 for (int i = 0; i < lvars.size(); i++) {
-                    sprintf(A, "%03d - %s", i, lvars.at(i).c_str());
+                    sprintf(A, "%04d - %s", i, lvars.at(i).c_str());
                     SendMessage(GetDlgItem(hDlg, IDC_SETLVAR_COMBO), (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)A);
                 }
                 // Send the CB_SETCURSEL message to display an initial item in the selection field  
@@ -473,10 +473,10 @@ INT_PTR CALLBACK SetLvar(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
                 case IDC_SETLVAR_GO: {
                     HWND hCombo = GetDlgItem(hDlg, IDC_SETLVAR_COMBO);
                     int nIndex = ::SendMessage(hCombo, CB_GETCURSEL, 0, 0);
-                    char selection[MAX_VAR_NAME_SIZE + 6];
+                    char selection[MAX_VAR_NAME_SIZE + 8];
                     SendMessage(hCombo, CB_GETLBTEXT, (WPARAM)nIndex, (LPARAM)selection);
-                    // Id is in first 3 characters
-                    selection[3] = 0;
+                    // Id is in first 4 characters
+                    selection[4] = 0;
                     short selectedId = atoi(selection);
                     HWND hEdit = GetDlgItem(hDlg, IDC_SETLVAR_VALUE);
                     char valueBuffer[64];
@@ -502,11 +502,11 @@ INT_PTR CALLBACK SetHvar(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_INITDIALOG: {
         // Populate Combo Box
         if (wasmPtr) {
-            char A[MAX_VAR_NAME_SIZE + 6];
+            char A[MAX_VAR_NAME_SIZE + 8];
             unordered_map<int, string > hvars;
             wasmPtr->getHvarList(hvars);
             for (int i = 0; i < hvars.size(); i++) {
-                sprintf(A, "%03d - %s", i, hvars.at(i).c_str());
+                sprintf(A, "%04d - %s", i, hvars.at(i).c_str());
                 SendMessage(GetDlgItem(hDlg, IDC_SETHVAR_COMBO), (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)A);
             }
             // Send the CB_SETCURSEL message to display an initial item in the selection field  
@@ -524,10 +524,10 @@ INT_PTR CALLBACK SetHvar(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         case IDC_SETHVAR_GO: {
             HWND hCombo = GetDlgItem(hDlg, IDC_SETHVAR_COMBO);
             int nIndex = ::SendMessage(hCombo, CB_GETCURSEL, 0, 0);
-            char selection[MAX_VAR_NAME_SIZE + 6];
+            char selection[MAX_VAR_NAME_SIZE + 8];
             SendMessage(hCombo, CB_GETLBTEXT, (WPARAM)nIndex, (LPARAM)selection);
-            // Id is in first 3 characters
-            selection[3] = 0;
+            // Id is in first 4 characters
+            selection[4] = 0;
             short selectedId = atoi(selection);
             wasmPtr->setHvar(selectedId);
             break;
