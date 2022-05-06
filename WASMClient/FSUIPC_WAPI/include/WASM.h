@@ -12,7 +12,7 @@
 #define CONFIG_CDA_NAME			"FSUIPC_config"
 #define LVARVALUE_CDA_NAME		"FSUIPC_SetLvar"
 #define CCODE_CDA_NAME			"FSUIPC_CalcCode"
-#define MAX_CALC_CODE_SIZE		1024 // Up to 8k
+#define MAX_CALC_CODE_SIZE		1024 // Up to 8k 
 
  // Define the default value where our events start. From this:
  //    0 = Get Config Data (provided but shouldn't be needed)
