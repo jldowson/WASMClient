@@ -220,12 +220,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 // Set-up defaults.
                 Default* defaults = Default::GetInstance("WASMClient");
 
-                int startEventNo = defaults->GetStartEventNo();
-                if (!startEventNo) startEventNo = EVENT_START_NO;
                 int lvarUpdateFrequency = defaults->GetLvarUpdateFrequency(); // 6Hz (default)
                 int logLevel = defaults->GetLogLevel();
 
-                if (!wasmPtr) wasmPtr = WASMIF::GetInstance(hWnd);
+                if (!wasmPtr) wasmPtr = WASMIF::GetInstance();
 //              if (!wasmPtr) wasmPtr = WASMIF::GetInstance(hWnd, &MyLogFunction);
 //              if (!wasmPtr) wasmPtr = WASMIF::GetInstance(hWnd, EVENT_START_NO, &MyLogFunction);
                 wasmPtr->setLogLevel((LOGLEVEL)logLevel);
