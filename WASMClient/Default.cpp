@@ -9,7 +9,6 @@ Default* Default::m_Instance = 0;
 
 Default::Default(const char* baseIniFileName)
 {
-    char msg[512];
 	m_iniFileName = std::string(baseIniFileName) + ".ini";
  
     // Load ini files: first from AppData folder

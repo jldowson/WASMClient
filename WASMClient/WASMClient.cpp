@@ -443,7 +443,6 @@ INT_PTR CALLBACK GetLvar(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 // Message handler for Set Lvar dialog box.
 INT_PTR CALLBACK SetLvar(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
-    char logBuffer[512];
     UNREFERENCED_PARAMETER(lParam);
     switch (message) {
         case WM_INITDIALOG: {
@@ -480,6 +479,7 @@ INT_PTR CALLBACK SetLvar(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
                     char valueBuffer[64];
 
                     GetWindowText(hEdit, valueBuffer, 64); valueBuffer[63] = '\0';
+//                    char logBuffer[512];
 //                    sprintf(logBuffer, "Setting lvar value as string: '%s'", valueBuffer);
 //                    LOG_DEBUG(logBuffer);
                     wasmPtr->setLvar(selectedId, valueBuffer);

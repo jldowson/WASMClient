@@ -9,8 +9,6 @@ extern ULONGLONG systemStartTime;
 
 HANDLE WINAPI MyLogCreateFile(char* psz, BOOL fNoPrev)
 {
-	char szLogBuffer[128];
-	DWORD dwRes;
 
 	if (!fNoPrev)
 	{
@@ -28,6 +26,9 @@ HANDLE WINAPI MyLogCreateFile(char* psz, BOOL fNoPrev)
 
 	HANDLE h = CreateFile(psz, GENERIC_WRITE, FILE_SHARE_READ, 0,
 		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+
+//	char szLogBuffer[128];
+//	DWORD dwRes;
 //	sprintf(szLogBuffer, "Console Started ...\r\n\r\n");
 //	WriteFile(h, szLogBuffer, (int)strlen(szLogBuffer), &dwRes, 0);
 

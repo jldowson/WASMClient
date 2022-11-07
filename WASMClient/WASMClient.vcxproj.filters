@@ -69,5 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="FSUIPC_WAPI\lib\FSUIPC_WAPI.lib" />
+    <Library Include="FSUIPC_WAPI\lib\FSUIPC_WAPI_debug.lib" />
   </ItemGroup>
 </Project>
