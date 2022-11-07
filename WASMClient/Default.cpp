@@ -19,7 +19,7 @@ Default::Default(const char* baseIniFileName)
     if (rc < 0) {
         m_logLevel = DEFAULT_LOG_LEVEL;
         m_lvarUpdateFrequency = DEFAULT_LVAR_UPDATE_FREQ;
-        m_startEventNo = DEFAULT_START_EVENT_NO;
+        m_simConnectConnection = SIMCONNECT_OPEN_CONFIGINDEX_LOCAL;
         return;
     }
 
@@ -41,15 +41,6 @@ Default::Default(const char* baseIniFileName)
         m_logLevel = DEFAULT_LOG_LEVEL;
 	}
 
-
-    pv = ini.GetValue("General", "StartEventNo");
-    if (pv) {
-        m_startEventNo = strtol(pv + 2, nullptr, 16);
-        if (m_startEventNo < 0x11000 || m_startEventNo > 0x1FFFF) {
-            m_startEventNo = DEFAULT_START_EVENT_NO;
-        }
-    }
-    else m_startEventNo = DEFAULT_START_EVENT_NO;
 
     pv = ini.GetValue("General", "LvarUpdateFrequency");
     if (pv) {
@@ -80,6 +71,5 @@ Default* Default::GetInstance(const char* text) throw ()
 
 
 int Default::GetLogLevel() { return m_logLevel;}
-int Default::GetStartEventNo() { return m_startEventNo; };
 int Default::GetLvarUpdateFrequency() { return m_lvarUpdateFrequency; };
 int Default::GetSimConnectConnection() { return m_simConnectConnection; };

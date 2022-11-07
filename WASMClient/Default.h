@@ -11,7 +11,6 @@ class Default
 		static Default* GetInstance(const char* text) throw ();
 		int GetLogLevel();
 		int GetLvarUpdateFrequency();
-		int GetStartEventNo();
 		int GetSimConnectConnection();
 
 	protected:
@@ -22,7 +21,6 @@ class Default
 		static Default* m_Instance;
 		std::string		m_iniFileName;
 		int				m_logLevel;
-		int				m_startEventNo;
 		int				m_lvarUpdateFrequency;
 		int				m_simConnectConnection;
 };
