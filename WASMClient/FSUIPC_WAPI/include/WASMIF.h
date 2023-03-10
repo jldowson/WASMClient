@@ -9,7 +9,7 @@
 #include "ClientDataArea.h"
 #include "CDAIdBank.h"
 
-#define WAPI_VERSION			"1.0.0"
+#define WAPI_VERSION			"1.0.2"
 
 using namespace ClientDataAreaMSFS;
 using namespace CDAIdBankMSFS;
@@ -96,8 +96,9 @@ class WASMIF
 		HANDLE  hSimConnect;
 		volatile HANDLE hThread = nullptr;
 		HANDLE hSimEventHandle = nullptr;
-		int quit, noLvarCDAs, noHvarCDAs, lvarUpdateFrequency;
+		int quit, noLvarCDAs, noHvarCDAs, noValueCDAs, lvarUpdateFrequency;
 		HANDLE configTimerHandle = nullptr;
+		HANDLE lvarCbTimerHandle = nullptr;
 		HANDLE requestTimerHandle = nullptr;
 		ClientDataArea* lvar_cdas[MAX_NO_LVAR_CDAS];
 		ClientDataArea* hvar_cdas[MAX_NO_HVAR_CDAS];
