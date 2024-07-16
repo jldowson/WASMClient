@@ -110,7 +110,7 @@ class WASMIF
 		vector<string> hvarNames;
 		CDAIdBank* cdaIdBank;
 		int simConnection = SIMCONNECT_OPEN_CONFIGINDEX_LOCAL;
-		CRITICAL_SECTION lvarValuesMutex, lvarNamesMutex, hvarNamesMutex, configMutex;
+		CRITICAL_SECTION lvarValuesMutex, lvarNamesMutex, hvarNamesMutex, configMutex, ccodeMutex;
 		void (*cdaCbFunction)(void) = NULL;
 		void (*lvarCbFunctionId)(int id[], double newValue[]) = NULL;
 		void (*lvarCbFunctionName)(const char* lvarName[], double newValue[]) = NULL;
